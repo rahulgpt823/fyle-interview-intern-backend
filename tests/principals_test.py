@@ -12,10 +12,11 @@ class TestPrincipalAPI:
             assert 'id' in teacher
             assert 'user_id' in teacher
 
-    def test_get_assignments(self, client, h_principal):
+    def test_get_assignments(self, client, h_principal,setup_data):
         response = client.get('/principal/assignments', headers=h_principal)
         assert response.status_code == 200
         data = response.json['data']
+        print(f"Response data: {data}")
         assert len(data) == 2  # Only SUBMITTED and GRADED assignments should be returned
         states = [assignment['state'] for assignment in data]
         assert AssignmentStateEnum.SUBMITTED.value in states

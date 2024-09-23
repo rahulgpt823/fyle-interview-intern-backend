@@ -2,7 +2,7 @@
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
+import pytest_mock
 db = SQLAlchemy()
 
 def create_app(config_name='development'):

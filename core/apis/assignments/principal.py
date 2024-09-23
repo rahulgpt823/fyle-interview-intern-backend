@@ -12,6 +12,7 @@ def get_assignments(principal):
     assignments = Assignment.query.filter(
         Assignment.state.in_([AssignmentStateEnum.SUBMITTED, AssignmentStateEnum.GRADED])
     ).all()
+    print(f"Fetched assignments: {assignments}")
     return jsonify({
         'data': [assignment.to_dict() for assignment in assignments]
     }), 200

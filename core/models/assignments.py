@@ -5,6 +5,7 @@ from core.libs import helpers, assertions
 from core.models.teachers import Teacher
 from core.models.students import Student
 from sqlalchemy.types import Enum as BaseEnum
+from sqlalchemy.orm import relationship
 
 
 class GradeEnum(str, enum.Enum):
@@ -31,6 +32,9 @@ class Assignment(db.Model):
     created_at = db.Column(db.TIMESTAMP(timezone=True), default=helpers.get_utc_now, nullable=False)
     updated_at = db.Column(db.TIMESTAMP(timezone=True), default=helpers.get_utc_now, nullable=False, onupdate=helpers.get_utc_now)
 
+    student = relationship(Student, foreign_keys=[student_id])
+    teacher = relationship(Teacher, foreign_keys=[teacher_id])
+
     def __repr__(self):
         return '<Assignment %r>' % self.id
     
@@ -50,6 +54,10 @@ class Assignment(db.Model):
     def filter(cls, *criterion):
         db_query = db.session.query(cls)
         return db_query.filter(*criterion)
+
+    @classmethod
+    def get(cls, _id):
+        return cls.get_by_id(_id)
 
     @classmethod
     def get_by_id(cls, _id):
@@ -84,7 +92,6 @@ class Assignment(db.Model):
         db.session.flush()
 
         return assignment
-
 
     @classmethod
     def mark_grade(cls, _id, grade, auth_principal: AuthPrincipal):
