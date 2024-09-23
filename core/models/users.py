@@ -1,6 +1,8 @@
 from core import db
 from core.libs import helpers
-
+from core.models.principals import Principal
+from core.models.students import Student
+from core.models.teachers import Teacher
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -10,8 +12,12 @@ class User(db.Model):
     created_at = db.Column(db.TIMESTAMP(timezone=True), default=helpers.get_utc_now, nullable=False)
     updated_at = db.Column(db.TIMESTAMP(timezone=True), default=helpers.get_utc_now, nullable=False, onupdate=helpers.get_utc_now)
 
+    principal = db.relationship('Principal', backref='user', uselist=False)
+    student = db.relationship('Student', backref='user', uselist=False)
+    teacher = db.relationship('Teacher', backref='user', uselist=False)
+
     def __repr__(self):
-        return '<User %r>' % self.username
+        return f"<User '{self.username}'>"
 
     @classmethod
     def filter(cls, *criterion):

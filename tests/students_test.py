@@ -1,3 +1,14 @@
+import pytest
+from core import db
+from core.models.users  import User
+@pytest.fixture(scope='function')
+def setup_data(test_client):
+    existing_user = User.query.filter_by(email="student1@example.com").first()
+    if not existing_user:
+        student_user = User(username="student1", email="student1@example.com")
+        db.session.add(student_user)
+        db.session.commit()
+
 def test_get_assignments_student_1(client, h_student_1):
     response = client.get(
         '/student/assignments',
