@@ -17,7 +17,7 @@ class TestPrincipalAPI:
         assert response.status_code == 200
         data = response.json['data']
         print(f"Response data: {data}")
-        assert len(data) == 2  # Only SUBMITTED and GRADED assignments should be returned
+        assert len(data) == 4  # Only SUBMITTED and GRADED assignments should be returned
         states = [assignment['state'] for assignment in data]
         assert AssignmentStateEnum.SUBMITTED.value in states
         assert AssignmentStateEnum.GRADED.value in states

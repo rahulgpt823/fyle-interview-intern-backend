@@ -57,9 +57,11 @@ def session(app):
 def setup_data(session):
     # Create assignments
     assignments = [
-        Assignment(id=1,state=AssignmentStateEnum.SUBMITTED, student_id=1, teacher_id=3, content="ESSAY T1"),
-        Assignment(id=2,state=AssignmentStateEnum.GRADED, student_id=1, teacher_id=3, content="ESSAY T2", grade=GradeEnum.B),
-        Assignment(id=3,state=AssignmentStateEnum.DRAFT, student_id=1, teacher_id=None, content="DRAFT ESSAY")
+        Assignment(id=1,state=AssignmentStateEnum.SUBMITTED, student_id=1, teacher_id=1, content="ESSAY T1"),
+        Assignment(id=2,state=AssignmentStateEnum.GRADED, student_id=1, teacher_id=1, content="ESSAY T2", grade=GradeEnum.B),
+        Assignment(id=3,state=AssignmentStateEnum.DRAFT, student_id=1, teacher_id=None, content="DRAFT ESSAY"),
+        Assignment(id=4, state=AssignmentStateEnum.SUBMITTED, student_id=2, teacher_id=1, content="ESSAY T3"),
+        Assignment(id=5, state=AssignmentStateEnum.SUBMITTED, student_id=2, teacher_id=2, content="ESSAY T4")
     ]
     session.add_all(assignments)
     session.commit()
